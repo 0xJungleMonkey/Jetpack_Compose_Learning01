@@ -15,6 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.getfini.jetpack_compose_learning01.ui.theme.Jetpack_Compose_Learning01Theme
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ElevatedButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,27 +33,32 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun Greeting(name: String) {
-    Surface ( color=MaterialTheme.colorScheme.primary){
-        Column(modifier = Modifier.padding(24.dp)){
-            Text(text = "Hello,")
-            Text(text = "$name!")
+    Surface ( color=MaterialTheme.colorScheme.primary,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)){
+        Row(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier
+                .weight(1f)){
+                Text(text = "Hello,")
+                Text(text = "$name!")
+            }
+            ElevatedButton(onClick = { /*TODO*/ }) {
+                Text(text = "Show more")
+            }
         }
-    }
 
+    }
 }
 
 @Composable
-fun MyApp(modifier: Modifier, names: List<String> = listOf("Word", "Compose")){
-    Surface (modifier=modifier, color=MaterialTheme.colorScheme.background){
-        Column(modifier) {
-            for (name in names) {
-                Greeting(name = name)
-            }
+private fun MyApp(modifier: Modifier, names: List<String> = listOf("Word", "Compose")){
+    Column(modifier) {
+        for (name in names) {
+            Greeting(name = name)
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
     Jetpack_Compose_Learning01Theme {
