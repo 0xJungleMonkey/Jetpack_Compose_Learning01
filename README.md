@@ -37,3 +37,10 @@ To use the Android Studio preview, you just have to mark any parameterless Compo
 In this case, Surface understands that, when the background is set to the primary color, any text on top of it should use the onPrimary color, which is also defined in the theme. You can learn more about this in the Theming your app section.
 Modifiers: Most Compose UI elements such as Surface and Text accept an optional modifier parameter. Modifiers tell a UI element how to lay out, display, or behave within its parent layout.
 For example, the padding modifier will apply an amount of space around the element it decorates. You can create a padding modifier with Modifier.padding().
+5. Reusing composables
+The more components you add to the UI, the more levels of nesting you create. This can affect readability if a function becomes really large. By making small reusable components it's easy to build up a library of UI elements used in your app. Each one is responsible for one small part of the screen and can be edited independently.
+
+As a best practice, your function should include a Modifier parameter that is assigned an empty Modifier by default. Forward this modifier to the first composable you call inside your function. This way, the calling site can adapt layout instructions and behaviors from outside of your composable function.
+
+The three basic standard layout elements in Compose are Column, Row and Box.
+
