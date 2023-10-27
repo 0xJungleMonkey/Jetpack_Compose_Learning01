@@ -25,6 +25,8 @@ import androidx.compose.material3.Button
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyColumn
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,9 +76,9 @@ private fun Greeting(name: String) {
 }
 
 @Composable
-private fun Greetings(modifier: Modifier=Modifier, names: List<String> = listOf("Word", "Compose")){
-    Column(modifier) {
-        for (name in names) {
+private fun Greetings(modifier: Modifier=Modifier, names: List<String> = List(1000){"$it"}){
+    LazyColumn(modifier = modifier.padding(vertical = 4.dp)){
+        items (items = names) {name ->
             Greeting(name = name)
         }
     }
@@ -116,3 +118,4 @@ fun OnboardingPreview() {
         OnboardingScreen(onContinueClicked = {})
     }
 }
+
