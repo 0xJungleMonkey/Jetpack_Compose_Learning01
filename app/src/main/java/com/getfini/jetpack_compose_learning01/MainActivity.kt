@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.runtime.saveable.rememberSaveable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +59,7 @@ fun OnboardingScreen(onContinueClicked: () -> Unit,
 }
 @Composable
 private fun Greeting(name: String) {
-    val expanded = remember{mutableStateOf(false)}
+    val expanded = remember {mutableStateOf(false)}
     Surface ( color=MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)){
         Row(modifier = Modifier.padding(24.dp)) {
@@ -85,7 +86,7 @@ private fun Greetings(modifier: Modifier=Modifier, names: List<String> = List(10
 }
 @Composable
 fun MyApp(modifier: Modifier) {
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
     Surface(modifier) {
         if (shouldShowOnboarding){
             OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
