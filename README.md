@@ -44,3 +44,12 @@ As a best practice, your function should include a Modifier parameter that is as
 
 The three basic standard layout elements in Compose are Column, Row and Box.
 
+7. State in Compose
+   In this section you'll add some interaction to your screen. So far you've created static layouts but now you'll make them react to user changes to achieve this:
+   Before getting into how to make a button clickable and how to resize an item, you need to store some value somewhere that indicates whether each item is expanded or not–the state of the item. Since we need to have one of these values per greeting, the logical place for it is in the Greeting composable. Take a look at this expanded boolean and how it's used in the code:
+   To add internal state to a composable, you can use the mutableStateOf function, which makes Compose recompose functions that read that State. 
+State and MutableState are interfaces that hold some value and trigger UI updates (recompositions) whenever that value changes.
+8. remember is used to guard against recomposition, so the state is not reset.
+   Note that if you call the same composable from different parts of the screen you will create different UI elements, each with its own version of the state. You can think of internal state as a private variable in a class.
+
+The composable function will automatically be "subscribed" to the state. If the state changes, composables that read these fields will be recomposed to display the updates.
