@@ -3,6 +3,7 @@ package com.getfini.jetpack_compose_learning01
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.areNavigationBarsVisible
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.Spring
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,20 +62,26 @@ fun OnboardingScreen(onContinueClicked: () -> Unit,
 }
 @Composable
 private fun Greeting(name: String) {
-    val expanded = remember {mutableStateOf(false)}
+    var expanded by remember {mutableStateOf(false)}
+    val extraPadding by animateDpAsState(
+        if (expanded) 48.dp else 0.dp, label = "",
+                animationSpec = spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+        stiffness = Spring.StiffnessLow)
+    )
     Surface ( color=MaterialTheme.colorScheme.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)){
         Row(modifier = Modifier.padding(24.dp)) {
             Column(modifier = Modifier
-                .weight(1f)){
+                .weight(1f)
+                .padding(bottom = extraPadding.coerceAtLeast(0.dp))){
                 Text(text = "Hello,")
                 Text(text = "$name!")
             }
-            ElevatedButton(onClick = { expanded.value = !expanded.value }) {
-                Text(if (expanded.value) "Show less" else "Show more")
+            ElevatedButton(onClick = { expanded = !expanded }) {
+                Text(if (expanded ) "Show less" else "Show more")
             }
         }
-
     }
 }
 
