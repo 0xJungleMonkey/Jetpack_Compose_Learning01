@@ -20,6 +20,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +37,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+@Composable
+fun OnboardingScreen(onContinueClicked: () -> Unit,
+                     modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Welcome to the Basics Codelab!")
+        Button(
+            modifier = Modifier.padding(vertical = 24.dp),
+            onClick = onContinueClicked
+        ) {
+            Text("Continue")
+        }
+    }
+}
 @Composable
 private fun Greeting(name: String) {
     val expanded = remember{mutableStateOf(false)}
@@ -53,10 +74,21 @@ private fun Greeting(name: String) {
 }
 
 @Composable
-private fun MyApp(modifier: Modifier, names: List<String> = listOf("Word", "Compose")){
+private fun Greetings(modifier: Modifier=Modifier, names: List<String> = listOf("Word", "Compose")){
     Column(modifier) {
         for (name in names) {
             Greeting(name = name)
+        }
+    }
+}
+@Composable
+fun MyApp(modifier: Modifier) {
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    Surface(modifier) {
+        if (shouldShowOnboarding){
+            OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
+        } else {
+            Greetings()
         }
     }
 }
@@ -66,5 +98,21 @@ private fun MyApp(modifier: Modifier, names: List<String> = listOf("Word", "Comp
 fun GreetingPreview() {
     Jetpack_Compose_Learning01Theme {
         MyApp(modifier = Modifier.fillMaxSize())
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun GreetingPreview1() {
+    Jetpack_Compose_Learning01Theme {
+        Greetings()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun OnboardingPreview() {
+    Jetpack_Compose_Learning01Theme {
+        OnboardingScreen(onContinueClicked = {})
     }
 }

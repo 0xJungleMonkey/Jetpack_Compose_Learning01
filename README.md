@@ -53,3 +53,10 @@ State and MutableState are interfaces that hold some value and trigger UI update
    Note that if you call the same composable from different parts of the screen you will create different UI elements, each with its own version of the state. You can think of internal state as a private variable in a class.
 
 The composable function will automatically be "subscribed" to the state. If the state changes, composables that read these fields will be recomposed to display the updates.
+
+In Composable functions, state that is read or modified by multiple functions should live in a common ancestor—this process is called state hoisting. To hoist means to lift or elevate.
+
+Making state hoistable avoids duplicating state and introducing bugs, helps reuse composables, and makes composables substantially easier to test. Contrarily, state that doesn't need to be controlled by a composable's parent should not be hoisted. The source of truth belongs to whoever creates and controls that state.
+
+For example, let's create an onboarding screen for our app.
+Add the following code to MainActivity.kt:
