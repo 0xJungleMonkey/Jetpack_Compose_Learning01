@@ -31,6 +31,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.Spring
+import androidx.compose.ui.text.font.FontWeight
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +77,7 @@ private fun Greeting(name: String) {
                 .weight(1f)
                 .padding(bottom = extraPadding.coerceAtLeast(0.dp))){
                 Text(text = "Hello,")
-                Text(text = "$name!")
+                Text(text = "$name!", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.ExtraBold))
             }
             ElevatedButton(onClick = { expanded = !expanded }) {
                 Text(if (expanded ) "Show less" else "Show more")
